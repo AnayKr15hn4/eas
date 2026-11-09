@@ -4,7 +4,8 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (!reduced) document.body.classList.add('enter');
+  // The intro wipe is the page's entrance when it plays; otherwise the name rises in.
+  if (!reduced && !document.documentElement.classList.contains('has-intro')) document.body.classList.add('enter');
 
   /* ---------- Lenis smooth scrolling ----------
      Off for reduced motion and when the library fails to load; native scrolling takes over. */

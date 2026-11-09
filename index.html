@@ -14,6 +14,12 @@
 <meta property="og:image" content="https://epicautospa.com/assets/hero.jpg">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
+<script>
+/* Decide before first paint whether the intro plays: once per session, replayed on reload. */
+(function(){try{var d=document.documentElement,n=performance.getEntriesByType('navigation')[0],again=n&&n.type==='reload';
+if(matchMedia('(prefers-reduced-motion: reduce)').matches||document.hidden||(sessionStorage.getItem('eas-intro')&&!again))return;
+d.classList.add('has-intro');setTimeout(function(){d.classList.remove('has-intro')},5000)}catch(e){}})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400..700&display=swap" rel="stylesheet">
@@ -40,6 +46,8 @@
 </script>
 </head>
 <body>
+<div class="intro-layer" id="introLayer" aria-hidden="true"><canvas id="introSpray"></canvas></div>
+<div class="intro-blade" id="introBlade" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to content</a>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -66,6 +74,7 @@
     <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
     <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
     <symbol id="i-car" viewBox="0 0 24 24"><path d="M3 15.5V13l2.2-4.6A2 2 0 0 1 7 7.3h10a2 2 0 0 1 1.8 1.1L21 13v2.5a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 15.5z"/><path d="M3 13h18M6.5 17v1.5M17.5 17v1.5"/><circle cx="7" cy="14.8" r=".6"/><circle cx="17" cy="14.8" r=".6"/></symbol>
+    <symbol id="i-twinkle" viewBox="0 0 24 24"><path d="M12 0C12.8 7.5 16.5 11.2 24 12 16.5 12.8 12.8 16.5 12 24 11.2 16.5 7.5 12.8 0 12 7.5 11.2 11.2 7.5 12 0Z"/></symbol>
   </defs>
 </svg>
 
@@ -112,8 +121,8 @@
     <img class="hero-car" src="assets/hero-car.webp" alt="A white Porsche 911 GT3 RS" width="2400" height="1350" fetchpriority="high">
   </div>
   <div class="hero-bar">
-    <a class="btn-glass" href="#book">Book an appointment</a>
-    <a class="btn-glass btn-glass-round" href="tel:+19082085724" aria-label="Call 908-208-5724"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg></a>
+    <a class="btn-glass" href="#book"><span class="glass-sheen" aria-hidden="true"></span>Book an appointment<svg class="twinkle tw1" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-twinkle"/></svg><svg class="twinkle tw2" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-twinkle"/></svg><svg class="twinkle tw3" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-twinkle"/></svg><svg class="twinkle tw4" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-twinkle"/></svg></a>
+    <a class="btn-glass btn-glass-round" href="tel:+19082085724" aria-label="Call 908-208-5724"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span class="glass-sheen" aria-hidden="true"></span><svg class="twinkle tw5" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-twinkle"/></svg><svg class="twinkle tw6" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-twinkle"/></svg></a>
   </div>
 </section>
 
@@ -139,11 +148,13 @@
 <!-- About -->
 <section class="section about-section" id="about">
   <div class="container about">
-    <figure class="avatar">
-      <img src="arjun-with-the-plaid.png" alt="Arjun" width="402" height="500" loading="lazy" onerror="this.parentElement.classList.add('no-img');this.remove()">
-      <span class="avatar-fallback" aria-hidden="true">A</span>
+    <div class="about-copy">
+      <h2>Hi, I'm Arjun.</h2>
+      <p class="about-text">A local high school student who's loved cars for as long as I can remember. My dad's Tesla Plaid got me into detailing. Now I treat every car like it's mine.</p>
+    </div>
+    <figure class="about-photo">
+      <img src="assets/arjun.webp" alt="Arjun sitting in the doorway of a red Tesla, holding a blue microfiber towel and a spray bottle" width="396" height="494" loading="lazy">
     </figure>
-    <p class="about-text"><strong>Hi, I'm Arjun.</strong> A local high school student who's loved cars for as long as I can remember. My dad's Tesla Plaid got me into detailing. Now I treat every car like it's mine.</p>
   </div>
 </section>
 
@@ -440,6 +451,7 @@
 </div>
 
 <script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js" defer></script>
+<script src="intro.js" defer></script>
 <script src="script.js" defer></script>
 </body>
 </html>

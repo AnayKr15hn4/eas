@@ -64,6 +64,13 @@ h1,h2,h3{margin:0;color:var(--ink);font-weight:600;line-height:1.06;letter-spaci
 .btn-lg{min-height:56px;font-size:17px}
 .btn-block{width:100%}
 
+/* ---------- Intro: fogged glass, spray, squeegee ---------- */
+.intro-layer,.intro-blade{display:none}
+.has-intro .intro-layer{display:block;position:fixed;inset:0;z-index:300;pointer-events:none;background:rgba(7,17,30,.3);-webkit-backdrop-filter:blur(18px) saturate(115%);backdrop-filter:blur(18px) saturate(115%)}
+.intro-layer canvas{display:block;width:100%;height:100%}
+.has-intro .intro-blade{display:block;position:fixed;z-index:301;top:-20vh;left:-5px;width:10px;height:140vh;pointer-events:none;opacity:0;border-radius:6px;background:linear-gradient(90deg,#050c16 0 55%,#3a9cff 55% 72%,#eef8ff 72% 100%);box-shadow:0 0 28px rgba(131,202,255,.85),0 0 90px rgba(58,156,255,.5);will-change:transform}
+.has-intro .intro-blade::after{content:"";position:absolute;top:0;bottom:0;left:100%;width:110px;background:linear-gradient(90deg,rgba(236,247,255,.5),rgba(236,247,255,0))}
+
 /* ---------- Floating nav ---------- */
 .nav-wrap{position:fixed;top:14px;left:0;right:0;z-index:100;pointer-events:none}
 .nav{pointer-events:auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;width:min(1200px,100% - 28px);margin-inline:auto;min-height:var(--nav-h);padding:8px 8px 8px 22px;border-radius:30px;background:rgba(9,20,34,.72);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);border:1px solid rgba(255,255,255,.08);box-shadow:0 1px 2px rgba(0,0,0,.04),0 10px 30px -14px rgba(0,0,0,.28);transition:width .5s var(--ease-out),background-color .3s,box-shadow .3s}
@@ -102,6 +109,21 @@ h1,h2,h3{margin:0;color:var(--ink);font-weight:600;line-height:1.06;letter-spaci
 .btn-glass:hover{background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.14));border-color:rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 16px 48px -12px rgba(58,156,255,.45)}
 .btn-glass:active{transform:scale(.97)}
 .hero-bar{gap:12px}
+
+/* Just-detailed sparkle: stars glint on the edges while a shine wipes across the glass */
+.btn-glass{position:relative}
+.glass-sheen{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none}
+.glass-sheen::before{content:"";position:absolute;top:-20%;bottom:-20%;left:0;width:45%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));transform:translateX(-160%) skewX(-18deg);animation:glassSheen 4.8s cubic-bezier(.4,0,.2,1) infinite}
+.btn-glass-round .glass-sheen::before{width:70%;animation-delay:.45s}
+.twinkle{position:absolute;fill:#fff;opacity:0;pointer-events:none;filter:drop-shadow(0 0 4px rgba(190,226,255,.95));animation:twinkle 3.2s ease-in-out infinite}
+.tw1{top:-9px;right:16%;width:17px;height:17px}
+.tw2{bottom:-7px;left:13%;width:13px;height:13px;animation-delay:.9s}
+.tw3{top:5px;left:-6px;width:10px;height:10px;animation-delay:1.7s}
+.tw4{right:-5px;bottom:9px;width:12px;height:12px;animation-delay:2.4s}
+.tw5{top:-6px;right:-3px;width:14px;height:14px;animation-delay:1.3s}
+.tw6{bottom:-3px;left:-2px;width:10px;height:10px;animation-delay:2.8s}
+@keyframes twinkle{0%,58%,100%{opacity:0;transform:scale(0) rotate(0)}72%{opacity:1;transform:scale(1) rotate(45deg)}84%{opacity:.75;transform:scale(.65) rotate(70deg)}94%{opacity:0;transform:scale(0) rotate(90deg)}}
+@keyframes glassSheen{0%{transform:translateX(-160%) skewX(-18deg)}32%,100%{transform:translateX(340%) skewX(-18deg)}}
 .btn-glass-round{width:58px;padding:0}
 .btn-glass-round .ico{width:22px;height:22px}
 .btn-light{background:#f5f9ff;color:#07111e}
@@ -193,13 +215,11 @@ h1,h2,h3{margin:0;color:var(--ink);font-weight:600;line-height:1.06;letter-spaci
 .card p{margin-top:8px;color:var(--steel);font-size:16px;line-height:1.5}
 
 /* ---------- About ---------- */
-.about{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:960px}
-.avatar{position:relative;width:128px;height:128px;margin:0 0 36px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#1c5fa3,#0d1a2b);box-shadow:0 0 0 6px #0d1a2b,0 0 0 7px rgba(58,156,255,.35)}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.avatar-fallback{display:none}
-.avatar.no-img .avatar-fallback{display:grid;place-items:center;height:100%;font-size:52px;font-weight:700;color:#fff}
-.about-text{font-size:clamp(28px,3.6vw,48px);font-weight:600;line-height:1.18;letter-spacing:-.03em;color:var(--steel);text-wrap:balance}
-.about-text strong{color:var(--ink);font-weight:600}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,7vw,104px);align-items:center}
+.about-copy h2{font-size:clamp(44px,5.8vw,80px)}
+.about-text{margin-top:24px;font-size:clamp(20px,2vw,28px);font-weight:500;line-height:1.35;letter-spacing:-.015em;color:var(--steel);max-width:26em;text-wrap:pretty}
+.about-photo{justify-self:end;width:100%;max-width:500px;aspect-ratio:396/494;margin:0;border-radius:32px;overflow:hidden;background:var(--tint);box-shadow:0 40px 80px -32px rgba(0,0,0,.7)}
+.about-photo img{width:100%;height:100%;object-fit:cover}
 
 /* ---------- Booking ---------- */
 .form-card{max-width:760px;margin:0 auto;padding:clamp(24px,4vw,48px);border-radius:32px;background:#0d1a2b}
@@ -258,8 +278,7 @@ h1,h2,h3{margin:0;color:var(--ink);font-weight:600;line-height:1.06;letter-spaci
 .offer-item h3{margin-top:20px;font-size:22px;letter-spacing:-.02em}
 .offer-item p{margin-top:8px;color:var(--steel);font-size:16px;line-height:1.5;max-width:32ch}
 .bridge{width:2px;height:clamp(96px,12vw,168px);margin:clamp(72px,9vw,120px) auto 0;border-radius:2px;background:linear-gradient(180deg,rgba(58,156,255,0),var(--blue))}
-.about-section{padding-top:0}
-.about-section .avatar{margin-top:-2px}
+.about-section{padding-top:clamp(40px,5vw,72px)}
 
 /* ---------- Order summary (bento, like "The details, done right") ---------- */
 .summary{margin:8px 0 24px}
@@ -304,6 +323,8 @@ h1,h2,h3{margin:0;color:var(--ink);font-weight:600;line-height:1.06;letter-spaci
   .hero-stage{min-height:0}
   .steps{grid-template-columns:1fr}
   .offer-grid{grid-template-columns:1fr 1fr}
+  .about{grid-template-columns:1fr}
+  .about-photo{justify-self:center}
   .step{display:grid;grid-template-columns:auto 1fr;column-gap:24px;align-items:center;padding:28px}
   .step-n{grid-row:span 2;font-size:56px}
   .step h3{margin-top:0}
@@ -339,7 +360,6 @@ h1,h2,h3{margin:0;color:var(--ink);font-weight:600;line-height:1.06;letter-spaci
   .gallery-nav{display:none}
   .card{width:78vw;min-height:340px}
   .note-pill{border-radius:20px;width:auto;align-items:flex-start}
-  .avatar{width:104px;height:104px}
   .faq summary{font-size:17px}
   .faq details p{padding-right:0;font-size:16px}
   .footer{padding-bottom:112px}
